@@ -4179,9 +4179,6 @@ static int mipi_video_sony_hd720p_init(void)
 	return ret;
 }
 
-uint32_t cfg_panel_te_active[] = {GPIO_CFG(LCD_TE, 1, GPIO_CFG_INPUT, GPIO_CFG_NO_PULL, GPIO_CFG_2MA)};
-uint32_t cfg_panel_te_sleep[] = {GPIO_CFG(LCD_TE, 0, GPIO_CFG_INPUT, GPIO_CFG_PULL_DOWN, GPIO_CFG_2MA)};
-
 static int mipi_dsi_panel_power(int on)
 {
 	static bool dsi_power_on = false;
