@@ -1,4 +1,4 @@
-critical_alarm_voltage_mv/* Copyright (c) 2011-2012, Code Aurora Forum. All rights reserved.
+/* Copyright (c) 2011-2012, Code Aurora Forum. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -32,7 +32,7 @@ critical_alarm_voltage_mv/* Copyright (c) 2011-2012, Code Aurora Forum. All righ
 #include <linux/bma250.h>
 #include <linux/slimbus/slimbus.h>
 #include <linux/bootmem.h>
-#include <linux/msm_kgsl.h>
+#include <mach/kgsl.h>
 #ifdef CONFIG_ANDROID_PMEM
 #include <linux/android_pmem.h>
 #endif
@@ -1057,19 +1057,20 @@ static struct mipi_dsi_platform_data mipi_dsi_pdata = {
 	.dsi_power_save = mipi_dsi_panel_power,
 };
 #endif
+
 #ifdef CONFIG_HTC_BATT_8960
 #ifdef CONFIG_HTC_PNPMGR
 extern int pnpmgr_battery_charging_enabled(int charging_enabled);
 #endif 
 static int critical_alarm_voltage_mv[] = {3000, 3100, 3200, 3400};
 
-#ifdef CONFIG_HTC_BATT_8960
 static struct htc_battery_platform_data htc_battery_pdev_data = {
 	.guage_driver = 0,
 	.chg_limit_active_mask = HTC_BATT_CHG_LIMIT_BIT_TALK |
 								HTC_BATT_CHG_LIMIT_BIT_NAVI,
 	.critical_low_voltage_mv = 3100,
-	.critical_alarm_voltage_mv = 3000,
+	.critical_alarm_vol_ptr = critical_alarm_voltage_mv,
+	.critical_alarm_vol_cols = sizeof(critical_alarm_voltage_mv) / sizeof(int),
 	.overload_vol_thr_mv = 4000,
 	.overload_curr_thr_ma = 0,
 	
@@ -5470,7 +5471,6 @@ static struct cm3629_platform_data cm36282_pdata = {
 	.ps_conf2_val = CM3629_PS_ITB_1 | CM3629_PS_ITR_1 |
 		CM3629_PS2_INT_DIS | CM3629_PS1_INT_DIS,
 	.ps_conf3_val = CM3629_PS2_PROL_32,
-	.enable_polling_ignore = 1,
 	.mapping_table = cm3629_mapping_table,
 	.mapping_size = ARRAY_SIZE(cm3629_mapping_table),
 };
